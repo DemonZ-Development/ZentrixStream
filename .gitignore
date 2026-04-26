@@ -1,0 +1,63 @@
+# Environment files (contain sensitive API keys)
+.env
+.env.local
+.env.*.local
+
+# Database configuration files (contain credentials)
+**/_config.php
+**/db.php
+
+# But keep the example/template files
+!**/_config.example.php
+!**/db.example.php
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log files
+*.log
+error_log
+access_log
+
+# Cache and temp files
+cache/
+tmp/
+temp/
+*.tmp
+*.cache
+
+# Dependency directories (if using Composer/npm in future)
+vendor/
+node_modules/
+
+# Build artifacts
+dist/
+build/
+*.zip
+*.tar.gz
+
+# Session files
+sessions/
+sess_*
+
+# Upload directories (if any)
+uploads/
+*.jpg
+*.jpeg
+*.png
+*.gif
+!ZentrixDev.png
+
+# Security: Never commit these
+*.sql
+database.sql
+backup.sql

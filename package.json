@@ -1,0 +1,27 @@
+{
+  "name": "@demonzdevelopment/zentrixstream",
+  "version": "3.0.1",
+  "description": "The Ultimate Dual-Portal Streaming Experience",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepackage": "mkdir -p dist",
+    "package:zip": "zip -r dist/zentrixstream-${npm_package_version}.zip anime/ movie/ index.php LICENSE README.md EDUCATIONAL.md -x '*/.env' -x '*/db.php' -x '*/_config.php'",
+    "package:tar": "tar -czf dist/zentrixstream-${npm_package_version}.tar.gz anime/ movie/ index.php LICENSE README.md EDUCATIONAL.md --exclude='*/.env' --exclude='*/db.php' --exclude='*/_config.php'",
+    "package": "npm run package:zip && npm run package:tar"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zentrix-Dev/ZentrixStream.git"
+  },
+  "keywords": [
+    "streaming",
+    "anime",
+    "movies",
+    "php"
+  ],
+  "author": "DemonZ Development",
+  "license": "GPL-3.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
