@@ -1,7 +1,7 @@
 # ZentrixStream 🎬
 
 <p align="center">
-  <img src="ZentrixStream.jpg" alt="ZentrixStream Logo" width="200">
+  <img src="ZentrixStream.png" alt="ZentrixStream Logo" width="200">
 </p>
 
 <p align="center">
