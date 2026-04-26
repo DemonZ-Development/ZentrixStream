@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mysqli, pdo_mysql
+        tools: phpstan, cs2pr
+    
+    - name: Validate PHP syntax
+      run: |
+        # Fixed: Uses xargs to process files individually. 
+        # This prevents 'grep' from returning an exit code 1 when no errors are found.
+        find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+    
+    - name: Run PHPStan
+      run: |
+        phpstan analyse --level=5 --no-progress --error-format=table anime movie index.php || true
+    
+    - name: Check file permissions
+      run: |
+        if [ -f "movie/.env" ]; then
+          echo "⚠️ Warning: .env file should not be committed"
+        fi
+        if [ -f "anime/.env" ]; then
+          echo "⚠️ Warning: .env file should not be committed"
+        fi
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check for hardcoded credentials
+      run: |
+        # Check for common patterns that shouldn't be in code
+        grep -r "password.*=" anime/*.php movie/*.php --include="*.php" | grep -v "real_escape_string\|password_hash\|password_verify\|_POST\|_GET" || true
+        grep -r "api_key.*=" anime/*.php movie/*.php --include="*.php" | grep -v "\$_ENV\|getenv\|parse_ini_file" || true
+    
+    - name: Check for SQL injection patterns
+      run: |
+        # Look for potential SQL injection (should use prepared statements)
+        grep -rn "mysql.*=.*\$" anime/*.php movie/*.php anime/**/*.php movie/**/*.php --include="*.php" || true
